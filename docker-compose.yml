@@ -9,10 +9,10 @@ services:
     ports:
       - 9090:9090
     links:
-      - tsdb
+      - metis
       - node-exporter
     depends_on:
-      - tsdb
+      - metis
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/tmp/data
@@ -21,10 +21,10 @@ services:
     restart: always
 
 
-  tsdb:
+  metis:
     build: ./
     volumes:
-      - ./data:/var/tsdb/data
+      - ./data:/var/metis/data
     ports:
       - 8080:8080
     restart: always

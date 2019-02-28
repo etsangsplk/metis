@@ -3,9 +3,9 @@ package handler
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 
+	"github.com/digitalocean/metis/log"
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/snappy"
 	"github.com/prometheus/prometheus/prompb"
@@ -27,7 +27,6 @@ func RemoteWrite(db *tsdb.DB) http.HandlerFunc {
 		}
 
 		ap := db.Appender()
-		defer ap.Commit()
 		for _, ts := range timeseries {
 			lbls := make(labels.Labels, len(ts.Labels))
 			for i, l := range ts.Labels {
@@ -46,11 +45,16 @@ func RemoteWrite(db *tsdb.DB) http.HandlerFunc {
 					err = ap.AddFast(ref, s.GetTimestamp(), s.GetValue())
 				}
 				if err != nil {
-					log.Printf("failed writing sample to store: %+v\n", err)
+					log.Error("failed writing sample to store: %+v\n", err)
 				}
 			}
 		}
 
+		if err := ap.Commit(); err != nil {
+			log.Error("failed to commit write: %+v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 }
 

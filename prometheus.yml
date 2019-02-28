@@ -4,9 +4,9 @@ global:
   evaluation_interval: 5s
 
 remote_write:
-  - url: "http://tsdb:8080/write"
+  - url: "http://metis:8080/write"
 remote_read:
-  - url: "http://tsdb:8080/read"
+  - url: "http://metis:8080/read"
 
 scrape_configs:
   - job_name: 'node'
