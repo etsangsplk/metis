@@ -1,0 +1,18 @@
+---
+global:
+  scrape_interval:     5s
+  evaluation_interval: 5s
+
+remote_write:
+  - url: "http://tsdb:8080/write"
+remote_read:
+  - url: "http://tsdb:8080/read"
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+    - targets: ['node-exporter:9100']
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: '^node_(network_receive_bytes_total|network_transmit_bytes_total|memory_MemTotal_bytes|memory_MemFree_bytes|memory_Cached_bytes|memory_SwapCached_bytes|memory_SwapFree_bytes|memory_SwapTotal_bytes|filesystem_size_bytes|filesystem_free_bytes|disk_read_bytes_total|disk_written_bytes_total|cpu_seconds_total|load1|load5|load15)$'
+        action: keep

@@ -1,0 +1,46 @@
+---
+version: '3.1'
+
+services:
+  prometheus:
+    image: docker.io/prom/prometheus:v2.7.1
+    volumes:
+      - ./prometheus.yml/:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    links:
+      - tsdb
+      - node-exporter
+    depends_on:
+      - tsdb
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/tmp/data
+      - --storage.tsdb.retention.time=60s
+      - --log.level=debug
+    restart: always
+
+
+  tsdb:
+    build: ./
+    volumes:
+      - ./data:/var/tsdb/data
+    ports:
+      - 8080:8080
+    restart: always
+
+
+  node-exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: 
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+    restart: always
