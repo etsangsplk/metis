@@ -33,7 +33,7 @@ func InitConfig() error {
 	flag.BoolVar(&version, "version", false, "show version information")
 
 	var wals string
-	flag.StringVar(&wals, "wal-segment-size", "10MB", "Write Ahead Log segment size")
+	flag.StringVar(&wals, "wal-segment-size", "128MB", "Write Ahead Log segment size")
 	flag.Parse()
 
 	if version {

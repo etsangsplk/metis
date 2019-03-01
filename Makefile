@@ -42,7 +42,7 @@ linter = @docker run \
 	golangci/golangci-lint:v1.15.0 \
 	golangci-lint
 
-target/metis-$(GOOS)-$(GOARCH): $(gofiles) $(lint)
+target/metis-$(GOOS)-$(GOARCH): $(gofiles)
 	$(print)
 	$(mkdir)
 	@$(go) build -a \
@@ -63,3 +63,6 @@ target/.cache/linter: $(gofiles)
 	$(print)
 	$(linter) run
 	$(touch)
+
+.PHONY: ci
+ci: lint docker
