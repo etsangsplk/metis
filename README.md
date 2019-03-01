@@ -23,7 +23,7 @@ Usage of metis:
         Write Ahead Log segment size (default "128MB")
 ```
 
-Remote TSDB is [TSDB](https://github.com/prometheus/tsdb) wrapped with HTTP
+Metis TSDB is [TSDB](https://github.com/prometheus/tsdb) wrapped with HTTP
 endpoints for RemoteRead and RemoteWrite. You can run `metis` on a persistent
 disk and run an ephemeral instance of Prometheus (i.e. in Kubernetes),
 configured to remote-read and remote-write against `metis`. You can also write
