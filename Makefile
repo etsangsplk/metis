@@ -64,5 +64,11 @@ target/.cache/linter: $(gofiles)
 	$(linter) run
 	$(touch)
 
+test: target/.coverprofile
+target/.coverprofile:
+	$(mkdir)
+	$(print)
+	@$(go) test -coverprofile=$@ ./...
+
 .PHONY: ci
-ci: lint docker
+ci: lint docker test
