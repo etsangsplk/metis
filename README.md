@@ -1,4 +1,9 @@
-# Remote TSDB
+# Metis TSDB
+
+[![Build
+Status](https://travis-ci.org/digitalocean/metis.svg?branch=master)](https://travis-ci.org/digitalocean/metis)
+[![Go Report Card](https://goreportcard.com/badge/github.com/digitalocean/metis)](https://goreportcard.com/report/github.com/digitalocean/metis)
+[![Coverage Status](https://coveralls.io/repos/github/digitalocean/metis/badge.svg?branch=feat%2Fadd-coveralls-report)](https://coveralls.io/github/digitalocean/metis?branch=feat%2Fadd-coveralls-report)
 
 ```
 Usage of metis:
