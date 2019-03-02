@@ -48,7 +48,8 @@ target/metis-$(GOOS)-$(GOARCH): $(gofiles)
 	@$(go) build -a \
 		-installsuffix cgo \
 		-ldflags $(ldflags) \
-		-o $@ ./cmd/metis/*.go
+		-o $@ \
+		./cmd/metis-store/*.go
 
 docker: target/.cache/docker-image-$(git_rev)
 target/.cache/docker-image-$(git_rev): Dockerfile $(gofiles)
