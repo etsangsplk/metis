@@ -25,3 +25,12 @@ install:
 script:
   - make ci
   - goveralls -coverprofile=target/.coverprofile -service=travis-ci -repotoken $COVERALLS_API_TOKEN
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+deploy:
+  provider: script
+  script: docker push docker.io/digitalocean/metis:$TRAVIS_COMMIT
+  on:
+    branch: master
