@@ -1,7 +1,7 @@
 gofiles     = $(shell find . -type f -iname '*.go' | grep -v vendor)
 now         = $(shell date -u)
 git_rev     = $(shell git rev-parse HEAD)
-version     = $(shell git describe --tags --abbrev=0 2>/dev/null || echo -n $(git_rev))
+version     = $(shell git describe --tags)
 GO_VERSION := $(shell cat .go-version)
 
 mkdir       = @mkdir -p $(dir $@)
