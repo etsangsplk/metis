@@ -31,6 +31,6 @@ before_deploy:
 
 deploy:
   provider: script
-  script: docker push docker.io/digitalocean/metis:$TRAVIS_COMMIT
+  script: docker push docker.io/digitalocean/metis:$(git rev-parse --short HEAD)
   on:
     branch: master
