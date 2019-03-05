@@ -51,8 +51,8 @@ target/metis-$(GOOS)-$(GOARCH): $(gofiles)
 		-o $@ \
 		./cmd/metis-store/*.go
 
-docker: target/.cache/docker-image-$(git_rev)
-target/.cache/docker-image-$(git_rev): Dockerfile $(gofiles)
+docker: target/.cache/docker-image-$(version)
+target/.cache/docker-image-$(version): Dockerfile $(gofiles)
 	$(mkdir)
 	@docker build . \
 		-t docker.io/digitalocean/metis:$(version)
